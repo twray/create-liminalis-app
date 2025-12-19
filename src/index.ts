@@ -44,7 +44,7 @@ async function init() {
     }
 
     projectName = result.projectName;
-    targetDir = result.directory === "." ? projectName : result.directory;
+    targetDir = result.directory;
   } else {
     projectName = path.basename(targetDir);
   }
