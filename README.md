@@ -24,14 +24,6 @@ pnpm create liminalis-app my-music-viz
 npx create-liminalis-app my-music-viz
 ```
 
-## Templates
-
-Choose from several starter templates:
-
-- **Default** - Minimal setup to get started quickly
-- **Animated Circles** - Bouncing circles that respond to MIDI notes
-- **MIDI Piano** - Interactive piano keyboard visualization
-
 ## What's Included
 
 Each template includes:
