@@ -1,0 +1,51 @@
+{
+  "name": "create-liminalis-app",
+  "version": "0.1.0",
+  "description": "Scaffold a new Liminalis music visualization project",
+  "type": "module",
+  "bin": {
+    "create-liminalis-app": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "templates",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "liminalis",
+    "create-liminalis-app",
+    "creative-coding",
+    "midi",
+    "visualization",
+    "scaffolding",
+    "music-visualization",
+    "canvas"
+  ],
+  "author": "Tim Wray",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twray/create-liminalis-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/twray/create-liminalis-app/issues"
+  },
+  "homepage": "https://github.com/twray/create-liminalis-app#readme",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "prompts": "^2.4.2",
+    "kolorist": "^1.8.0",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/prompts": "^2.4.9",
+    "@types/fs-extra": "^11.0.4",
+    "typescript": "^5.3.3"
+  }
+}
