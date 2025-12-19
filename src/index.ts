@@ -15,27 +15,41 @@ async function init() {
   );
 
   let targetDir = process.argv[2];
+  let projectName: string;
 
   if (!targetDir) {
-    const result = await prompts({
-      type: "text",
-      name: "projectName",
-      message: "Project name:",
-      initial: "my-liminalis-app",
-      validate: (name) =>
-        /^[a-z0-9-_]+$/.test(name) ||
-        "Project name must contain only lowercase letters, numbers, hyphens, and underscores",
-    });
+    const result = await prompts([
+      {
+        type: "text",
+        name: "projectName",
+        message: "Project name:",
+        initial: "my-liminalis-app",
+        validate: (name) =>
+          /^[a-z0-9-_]+$/.test(name) ||
+          "Project name must contain only lowercase letters, numbers, hyphens, and underscores",
+      },
+      {
+        type: "text",
+        name: "directory",
+        message: "Directory to create project in:",
+        initial: ".",
+        validate: (dir) =>
+          dir.trim().length > 0 || "Directory path cannot be empty",
+      },
+    ]);
 
-    if (!result.projectName) {
+    if (!result.projectName || !result.directory) {
       console.log(red("✖ Project creation cancelled"));
       process.exit(1);
     }
 
-    targetDir = result.projectName;
+    projectName = result.projectName;
+    targetDir = result.directory === "." ? projectName : result.directory;
+  } else {
+    projectName = path.basename(targetDir);
   }
 
-  const root = path.join(process.cwd(), targetDir);
+  const root = path.resolve(process.cwd(), targetDir);
 
   // Check if directory exists
   if (fs.existsSync(root)) {
@@ -76,12 +90,14 @@ async function init() {
   // Update package.json with project name
   const pkgPath = path.join(root, "package.json");
   const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-  pkg.name = path.basename(root);
+  pkg.name = projectName;
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
 
   console.log(green("✔") + " Project created successfully!\n");
   console.log("Next steps:\n");
-  console.log(`  ${cyan("cd")} ${targetDir}`);
+  if (targetDir !== ".") {
+    console.log(`  ${cyan("cd")} ${targetDir}`);
+  }
   console.log(`  ${cyan("npm install")}`);
   console.log(`  ${cyan("npm run dev")}\n`);
   console.log("📚 Documentation: https://github.com/twray/liminalis\n");
